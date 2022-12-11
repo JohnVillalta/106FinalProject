@@ -19,6 +19,13 @@
 #mDiv0 div {
     margin: 20px 0px 0px 12vw;
 }
+#gtast {
+    display: inline-block;
+    width: 40px;
+    font-size: 100%;
+    position: relative;
+    bottom: 10px;
+}
 .homeForm {
     width: 250px;
     margin-top: 10px;
@@ -51,6 +58,11 @@
     position: relative;
     top: 4px;
     left: 1vw;
+}
+.blogIcon {
+    padding-left: 21px;
+    height: 35px;
+    display: inline-block;
 }
 /*--End Css for leftmost div--*/
 /*--Css for majority of the middlediv of homepage--*/

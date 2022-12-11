@@ -11,7 +11,8 @@
 <body>
 <div class="mainDivs" id="mDiv0"> <!--div for the left side of home page -->
     <div>
-        <p>'Blogtastic Logo'</p>
+        <img src="../static/images/star_FILL1_wght400_GRAD0_opsz48.svg" alt="blogtasticIcon" class="blogIcon">
+        <p id="gtast">Blogtastic&#8482;</p>
         <form method="POST" class="home homeForm">
             <img src="../static/images/home_FILL1_wght400_GRAD0_opsz48.svg" alt="homeIcon" class="itemImg">
             <p class="containHome">
@@ -25,6 +26,9 @@
             </p>
         </form>
     </div>
+    <div class="bottomLeft">
+        <p>Bottom Ting</p>
+    </div>
 </div>
 
 <div class="mainDivs" id="mDiv1"> <!--div for the middle of home page -->
@@ -34,8 +38,8 @@
 <div class="mainDivs" id="mDiv2"> <!--div for the right side of home page -->
     <div class="field">
         <div class="control c0">
-            <form method="POST">
-                <input class="input" type="text" name="searchbar" placeholder="Find User">
+            <form method="GET">
+                <input class="input" type="text" name="searchBar" placeholder="Find User">
                 <input class="inputButt" type="submit" name="search" value="Search">
             </form>
         </div>
