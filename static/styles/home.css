@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
+* {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+.mainDivs {
+    display: inline-block;
+    float: left;
+    height: 100vh;
+    padding: 0;
+}
+/*--Css for the majority of stuff in the leftdiv of homepage--*/
+#mDiv0 {
+    width: 27vw;
+}
+
+#mDiv0 div {
+    margin: 20px 0px 0px 12vw;
+}
+.homeForm {
+    width: 250px;
+    margin-top: 10px;
+}
+.homeForm:hover {
+    background-color: #bbb;
+    border-radius: 50px;
+}
+.containHome {
+    display: inline-block;
+}
+.homeButt {
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    position: relative;
+    bottom: 6px;
+    left: 1vw;
+    font-size: 150%;
+}
+.profileButt {
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    position: relative;
+    bottom: 6px;
+    left: 1vw;
+    font-size: 150%;
+}
+.itemImg {
+    height: 40px;
+    position: relative;
+    top: 4px;
+    left: 1vw;
+}
+/*--End Css for leftmost div--*/
+/*--Css for majority of the middlediv of homepage--*/
+#mDiv1 {
+    width: 45.5vw;
+    height: 100vh;
+    border: solid 2px #eee;
+}
+
+#mDiv2 {
+    width: 26vw;
+}
