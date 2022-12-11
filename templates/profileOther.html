@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Home / Blogtastic</title>
-    <link rel="stylesheet" href="../static/styles/home.css">
+    <link rel="stylesheet" href="../static/styles/profileOther.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
@@ -13,13 +13,13 @@
     <div>
         <p>'Blogtastic Logo'</p>
         <form method="POST" class="home homeForm">
-            <img src="../static/images/home_FILL1_wght400_GRAD0_opsz48.svg" alt="homeIcon" class="itemImg">
+            <img src="../static/images/home_FILL0_wght400_GRAD0_opsz48.svg" alt="homeIcon" class="itemImg">
             <p class="containHome">
                 <input type="submit" class="homeButt" name="home" value="Home">
             </p>
         </form>
         <form method="POST" class="profile homeForm">
-            <img src="../static/images/person_FILL0_wght400_GRAD0_opsz48.svg" alt="profileIcon" class="itemImg"
+            <img src="../static/images/person_FILL1_wght400_GRAD0_opsz48.svg" alt="profileIcon" class="itemImg"
             <p class="containProfile">
                 <input type="submit" class="profileButt" name="profile" value="Profile">
             </p>
@@ -28,15 +28,15 @@
 </div>
 
 <div class="mainDivs" id="mDiv1"> <!--div for the middle of home page -->
-    <p>This is div1</p>
+    <p>{{ nameT[0] }}</p>
 </div>
 
 <div class="mainDivs" id="mDiv2"> <!--div for the right side of home page -->
     <div class="field">
         <div class="control c0">
-            <form method="POST">
-                <input class="input" type="text" name="searchbar" placeholder="Find User">
-                <input class="inputButt" type="submit" name="search" value="Search">
+            <form method="GET">
+                <input class="input" type="text" name="search" placeholder="Find User">
+                <button class="inputButt" type="submit">Search</button>
             </form>
         </div>
     </div>

@@ -58,7 +58,6 @@
     width: 45.5vw;
     height: 100vh;
     border: solid 2px #eee;
-    border-style: none solid none;
 }
 
 /*--Css for rightmost div--*/
@@ -74,11 +73,5 @@
     border-radius: 25px;
     padding-left: 40px;
     margin: 15px 0px 0px 15px;
-}
-.inputButt {
-    width: 4vw;
-    height: 35px;
-    border: solid 2px #ddd;
-    border-radius: 25px;
 }
 /*--end Css for rightmost div
