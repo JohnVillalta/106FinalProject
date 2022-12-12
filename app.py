@@ -7,23 +7,63 @@ from flask import (
     redirect,
     g,
     flash,
+    current_app
 )
-from flask_login import LoginManager #,UserMixin, login_user, login_required, logout_user, current_user
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from flask_marshmallow import Marshmallow
 from flask_sqlalchemy import SQLAlchemy
+from flask_restful import Api, Resource
+from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, SubmitField
+from wtforms.validators import InputRequired, Length, ValidationError
 
 
 app = Flask(__name__)
-db = SQLAlchemy(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
-app.config['SECRET_KEY'] = 'thisisasecretkey'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SECRET_KEY'] = 'saltines'
+app.app_context().push
 
-class User(db.Model, UserMixin):
+db = SQLAlchemy(app)
+api = Api(app)
+
+class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(20), nullable=False)
+    username = db.Column(db.String(20), nullable=False, unique=True)
     password = db.Column(db.String(80), nullable=False)
+    admin = db.Column(db.Boolean, nullable=False)
+    blogs = db.relationship('Blog', lazy='select', backref=db.backref('user', lazy='joined'))
 
+class Blog(db.Model, UserMixin):
+    blogId = db.Column(db.Integer, primary_key=True)
+    userId =  db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    blogString = db.Column(db.Text, nullable=False)
+    date = db.Column(db.DateTime, nullable=False)
 
-login_manager = LoginManager()
+class SignUpForm(FlaskForm):
+    username = StringField(validators=[InputRequired(), Length(
+        min=4, max=20)], render_kw={'placeholder': 'Username'})
+    password = PasswordField(validators=[InputRequired(), Length(
+        min=4, max=20)], render_kw={'placeholder': 'Password'})
+    submit = SubmitField('SignUp')
+
+    def validate_username(self, username):
+        existing_user_username = User.query.filter_by(
+            username=username.data).first()
+        if existing_user_username:
+            raise ValidationError(
+                "That username already exists. Please choose a different one.")
+
+class LoginForm(FlaskForm):
+    username = StringField(validators=[InputRequired(), Length(
+        min=4, max=20)], render_kw={'placeholder': 'Username'})
+    password = PasswordField(validators=[InputRequired(), Length(
+        min=4, max=20)], render_kw={'placeholder': 'Password'})
+    submit = SubmitField('Login')
+
+with app.app_context():
+    db.create_all()
+
 #login_manager.init_app(app)
 #login_manager.login_view = "login"
 
@@ -31,6 +71,12 @@ login_manager = LoginManager()
 #def load_user(user_id):
     #return Users.query.get(int(user_id))
 
+#@app.teardown_request
+#def show_teardown(exception):
+    #print('after with block')
+
+#with app.test_request_context():
+    #print('during with block')
 
 #this is the home page landing, this page gives you access to refreshing home page, accessing your profile if logged in
 #logging in, and searching for other account profiles
@@ -40,7 +86,7 @@ def home():
         return redirect(url_for('home'))
     if request.method == 'POST' and request.form.get('profile') == 'Profile': #access your own profile
         return redirect(url_for('profileSelf'))
-    if request.method == 'POST' and request.form.get('sign') == 'Sign in':
+    if request.method == 'POST' and request.form.get('sign') == 'Sign In':
         return redirect(url_for('login'))
     if request.method == 'GET' and request.args.get('search') != None: #access another profile and use search bar arguement as nameT
         nameT = request.args.get('searchBar')
@@ -50,11 +96,12 @@ def home():
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signUp():
+    form = SignUpForm()
     return render_template('signUp.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    #form = LoginForm()
+    form = LoginForm()
     #if form.validate_on_submit():
         #login_user(user)
         #flask.flash('Logged in successfully')
