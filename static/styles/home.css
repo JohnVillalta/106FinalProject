@@ -37,6 +37,9 @@
 .containHome {
     display: inline-block;
 }
+.containProfile {
+    display: inline-block;
+}
 .homeButt {
     background-color: rgba(0, 0, 0, 0);
     border: none;
@@ -65,9 +68,32 @@
     display: inline-block;
 }
 .bottomLeft {
-    padding-top: 600px;
-    background-color: red;
+    padding-top: 650px;
     height: 100px;
+}
+.profileImg {
+    height: 70px;
+    width: 70px;
+    object-fit: cover;
+    object-position: 50% 0%;
+    border-radius: 50%;
+    margin-left: 15px;
+}
+.bottUser {
+    display: inline-block;
+    position: relative;
+    bottom: 40px;
+    font-size: 130%;
+    margin-left: 10px;
+}
+.signButt {
+    display: inline-block;
+    position: relative;
+    bottom: 20px;
+    right: 116px;
+    background: none;
+    border: none;
+    font-size: 95%;
 }
 /*--End Css for leftmost div--*/
 /*--Css for majority of the middlediv of homepage--*/

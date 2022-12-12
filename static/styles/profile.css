@@ -64,12 +64,38 @@
     height: 35px;
     display: inline-block;
 }
+.bottomLeft {
+    padding-top: 650px;
+    height: 100px;
+}
+.profileImg {
+    height: 70px;
+    width: 70px;
+    object-fit: cover;
+    object-position: 50% 0%;
+    border-radius: 50%;
+    margin-left: 15px;
+}
+.bottUser {
+    display: inline-block;
+    position: relative;
+    bottom: 40px;
+    font-size: 130%;
+    margin-left: 10px;
+}
+.bottID {
+    display: inline-block;
+    position: relative;
+    bottom: 20px;
+    right: 110px;
+}
 /*--End Css for leftmost div--*/
 /*--Css for majority of the middlediv of homepage--*/
 #mDiv1 {
     width: 45.5vw;
     height: 100vh;
     border: solid 2px #eee;
+    border-style: none solid none;
 }
 
 /*--Css for rightmost div--*/
@@ -85,5 +111,11 @@
     border-radius: 25px;
     padding-left: 40px;
     margin: 15px 0px 0px 15px;
+}
+.inputButt {
+    width: 4vw;
+    height: 35px;
+    border: solid 2px #ddd;
+    border-radius: 25px;
 }
 /*--end Css for rightmost div
