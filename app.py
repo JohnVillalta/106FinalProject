@@ -16,9 +16,11 @@ from flask_restful import Api, Resource
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import InputRequired, Length, ValidationError
+from flask_bcrypt import Bcrypt
 
 
 app = Flask(__name__)
+bcrypt = Bcrypt(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'saltines'
@@ -27,7 +29,15 @@ app.app_context().push
 db = SQLAlchemy(app)
 api = Api(app)
 
-class User(db.Model):
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), nullable=False, unique=True)
     password = db.Column(db.String(80), nullable=False)
@@ -61,11 +71,9 @@ class LoginForm(FlaskForm):
         min=4, max=20)], render_kw={'placeholder': 'Password'})
     submit = SubmitField('Login')
 
+
 with app.app_context():
     db.create_all()
-
-#login_manager.init_app(app)
-#login_manager.login_view = "login"
 
 #@login_manager.user_loader
 #def load_user(user_id):
@@ -88,25 +96,39 @@ def home():
         return redirect(url_for('profileSelf'))
     if request.method == 'POST' and request.form.get('sign') == 'Sign In':
         return redirect(url_for('login'))
+    elif request.method == 'POST' and request.form.get('sign') == 'Sign Out':
+        logout_user()
+        return redirect(url_for('home'))
     if request.method == 'GET' and request.args.get('search') != None: #access another profile and use search bar arguement as nameT
         nameT = request.args.get('searchBar')
         return redirect(url_for('profileOther', nameT=nameT))
 
-    return render_template('home.html')
+    return render_template('home.html', current_user=current_user)
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signUp():
     form = SignUpForm()
-    return render_template('signUp.html')
+
+    if form.validate_on_submit():
+        hashed_password = bcrypt.generate_password_hash(form.password.data)
+        new_user = User(username=form.username.data, password=hashed_password, admin=False)
+        db.session.add(new_user)
+        db.session.commit()
+        return redirect(url_for('login'))
+
+    return render_template('signUp.html', form=form)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
-    #if form.validate_on_submit():
-        #login_user(user)
-        #flask.flash('Logged in successfully')
-    # if request.method == 'POST':
-    return render_template('login.html')
+
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=form.username.data).first()
+        if user:
+            if bcrypt.check_password_hash(user.password, form.password.data):
+                login_user(user)
+                return redirect(url_for('profileSelf'))
+    return render_template('login.html', form=form)
 
 #this must always have nameT as a parameter since we're using that to find the profile, future implementation could use
 #user.ID or something of the sort :)
@@ -124,6 +146,7 @@ def profileOther(nameT):
 
 #directs you to your own profile if logged in, otherwise will lead to login page
 @app.route('/profile-self', methods=['GET', 'POST'])
+@login_required
 def profileSelf():
     if request.method == 'POST' and request.form.get('home') == 'Home': #redirect to home page landing
         return redirect(url_for('home'))

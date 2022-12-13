@@ -6,14 +6,16 @@
     <link rel="stylesheet" href="../static/styles/login.css">
 </head>
 <body>
-    <div>
+    <div class="mainDiv">
         <img src="../static/images/star_FILL1_wght400_GRAD0_opsz48.svg" alt="blogtasticIcon" class="blogIcon">
         <p class="loginTitle">Sign in to Blogtastic&#8482;</p>
-        <form methodclass="loginForm">
-            <input>
-            <input>
-            <input>
+        <form method="POST" class="loginForm">
+            {{ form.hidden_tag() }}
+            {{ form.username }}
+            {{ form.password }}
+            {{ form.submit }}
         </form>
+        <a href="{{url_for('signUp')}}">Don't have an account? Sign Up</a>
     </div>
 </body>
 </html>

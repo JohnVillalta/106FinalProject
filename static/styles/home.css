@@ -86,11 +86,20 @@
     font-size: 130%;
     margin-left: 10px;
 }
-.signButt {
+#signButt1 {
     display: inline-block;
     position: relative;
     bottom: 20px;
-    right: 116px;
+    right: 96px;
+    background: none;
+    border: none;
+    font-size: 95%;
+}
+#signButt2 {
+    display: inline-block;
+    position: relative;
+    bottom: 20px;
+    right: 70px;
     background: none;
     border: none;
     font-size: 95%;

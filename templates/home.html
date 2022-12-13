@@ -28,9 +28,15 @@
     </div>
     <div class="bottomLeft">
         <form method="POST" class="sign">
-            <img src="../static/images/franky.png" alt="profilepicIcon" class="profileImg">
-            <p class="bottUser">Username</p>
-            <input type="submit" class="signButt" name="sign" value="Sign In"><!--user Id -->
+            {% if current_user.is_authenticated %}
+                <img src="../static/images/franky.png" alt="profilepicIcon" class="profileImg">
+                <p class="bottUser">{{ current_user.username }}</p>
+                <input type="submit" id="signButt1" name="sign" value="Sign Out">
+            {% else %}
+                <img src="../static/images/unknown-person-icon-4.jpg" alt="guestIcon" class="profileImg">
+                <p class="bottUser">Guest</p>
+                <input type="submit" id="signButt2" name="sign" value="Sign In">
+            {% endif %}<!--user Id -->
         </form>
     </div>
 </div>
