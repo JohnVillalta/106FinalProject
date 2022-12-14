@@ -2,6 +2,7 @@ from flask import (
     Flask,
     render_template,
     request,
+    redirect,
     session,
     url_for,
     redirect,
@@ -88,6 +89,12 @@ with app.app_context():
 
 #this is the home page landing, this page gives you access to refreshing home page, accessing your profile if logged in
 #logging in, and searching for other account profiles
+
+@app.route('/', methods=['GET', 'POST'])
+def redirect_home():
+    return redirect(url_for('home'))
+
+
 @app.route('/home', methods=['GET', 'POST'])
 def home():
     if request.method == 'POST' and request.form.get('home') == 'Home': #refresh home page
